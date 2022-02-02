@@ -6,11 +6,11 @@ import com.binance.client.examples.constants.PrivateConfig;
 import com.binance.client.model.enums.NewOrderRespType;
 import com.binance.client.model.enums.OrderSide;
 import com.binance.client.model.enums.OrderType;
-import com.binance.client.model.enums.TimeInForce;
 
-import java.math.BigDecimal;
-
-public class PostOrderBuyLongMarket {
+/**
+ * @author Grigory Yakovlev
+ */
+public class PostOrderSellLongMarket {
     public static void main(String[] args) {
         RequestOptions options = new RequestOptions();
         options.setUrl("https://testnet.binancefuture.com");
@@ -22,7 +22,7 @@ public class PostOrderBuyLongMarket {
         // place dual position side order.
         // Switch between dual or both position side, call: com.binance.client.examples.trade.ChangePositionSide
 
-        System.out.println(syncRequestClient.postOrder("BTCUSDT", OrderSide.BUY, null, OrderType.MARKET, null,
+        System.out.println(syncRequestClient.postOrder("BTCUSDT", OrderSide.SELL, null, OrderType.MARKET, null,
                 "0.2", "", null, null, null, null, NewOrderRespType.RESULT));
     }
 }
