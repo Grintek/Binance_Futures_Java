@@ -7,13 +7,14 @@ import com.binance.client.model.enums.NewOrderRespType;
 import com.binance.client.model.enums.OrderSide;
 import com.binance.client.model.enums.OrderType;
 
+import java.math.BigDecimal;
+
 /**
  * @author Grigory Yakovlev
  */
 public class PostOrderSellLongMarket {
     public static void main(String[] args) {
-        RequestOptions options = new RequestOptions();
-        options.setUrl("https://testnet.binancefuture.com");
+        RequestOptions options = new RequestOptions(true);
         SyncRequestClient syncRequestClient = SyncRequestClient.create(PrivateConfig.API_KEY, PrivateConfig.SECRET_KEY,
                 options);
 //        System.out.println(syncRequestClient.postOrder("BTCUSDT", OrderSide.SELL, PositionSide.BOTH, OrderType.LIMIT, TimeInForce.GTC,
@@ -22,7 +23,14 @@ public class PostOrderSellLongMarket {
         // place dual position side order.
         // Switch between dual or both position side, call: com.binance.client.examples.trade.ChangePositionSide
 
+        BigDecimal qu = new BigDecimal("0.028");
+        BigDecimal percent = new BigDecimal("0.5");
+        BigDecimal main = qu.multiply(percent).setScale(3, BigDecimal.ROUND_CEILING);
+        String quantity = main.toString();
+        System.out.println(quantity);
+
         System.out.println(syncRequestClient.postOrder("BTCUSDT", OrderSide.SELL, null, OrderType.MARKET, null,
-                "0.2", "", null, null, null, null, NewOrderRespType.RESULT));
+                quantity, "", "true", null, null,
+                null, NewOrderRespType.RESULT));
     }
 }

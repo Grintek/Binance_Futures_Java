@@ -12,8 +12,7 @@ import java.math.BigDecimal;
 
 public class PostOrderBuyLongMarket {
     public static void main(String[] args) {
-        RequestOptions options = new RequestOptions();
-        options.setUrl("https://testnet.binancefuture.com");
+        RequestOptions options = new RequestOptions(true);
         SyncRequestClient syncRequestClient = SyncRequestClient.create(PrivateConfig.API_KEY, PrivateConfig.SECRET_KEY,
                 options);
 //        System.out.println(syncRequestClient.postOrder("BTCUSDT", OrderSide.SELL, PositionSide.BOTH, OrderType.LIMIT, TimeInForce.GTC,
@@ -21,8 +20,16 @@ public class PostOrderBuyLongMarket {
 
         // place dual position side order.
         // Switch between dual or both position side, call: com.binance.client.examples.trade.ChangePositionSide
+        BigDecimal mainSum = new BigDecimal("1000.0").setScale(3, BigDecimal.ROUND_CEILING);
+
+        BigDecimal a = syncRequestClient.getOrderBook("BTCUSDT", null).getAsks().get(0).getPrice();
+        System.out.println(a.toString());
+        BigDecimal calculateQuantity = mainSum.divide(a, BigDecimal.ROUND_CEILING);
+        String quantity = calculateQuantity.toString();
+        System.out.println("quantity: " + quantity);
 
         System.out.println(syncRequestClient.postOrder("BTCUSDT", OrderSide.BUY, null, OrderType.MARKET, null,
-                "0.2", "", null, null, null, null, NewOrderRespType.RESULT));
+                quantity, "", null, null, null,
+                null, NewOrderRespType.RESULT));
     }
 }

@@ -14,6 +14,10 @@ public class RequestOptions {
     public RequestOptions() {
     }
 
+    public RequestOptions(Boolean isTestUrl) {
+        this.url = isTestUrl ? BinanceApiConstants.API_TEST_URL : url;
+    }
+
     public RequestOptions(RequestOptions option) {
         this.url = option.url;
     }
